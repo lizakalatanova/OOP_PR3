@@ -1,0 +1,186 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+public class Task3 {
+    public static class city {
+        private String name;
+        private Integer count;
+        public city(String name, int count) {
+            this.name = name;
+            this.count = count;
+        }
+        int getCount() {return count;}
+        public void setCount(int val) { this.count = val; }
+        public String getValues() {
+            return name + " " + count;
+        }
+    }
+    public static void main(String[] args) {
+        Scanner c = new Scanner(System.in);
+        Scanner c0 = new Scanner(System.in);
+        Scanner c00 = new Scanner(System.in);
+        Scanner console = new Scanner(System.in);
+        List<city> list = new ArrayList<city>();
+        List<Integer> chisl = new ArrayList<Integer>();
+        List<Integer> ch = new ArrayList<Integer>();
+        /////№1
+        while (c.hasNext()) {
+            String s = c.nextLine();
+            if (s.equals("exit"))
+                break;
+        namee(list,s);
+        }
+        millionsRounding(list);
+        /////№2
+        int a = c.nextInt();
+        System.out.println(otherSides(a));
+        /////№3
+        String str1 = console.nextLine();
+        String str2 = console.nextLine();
+        System.out.println(rps(str1,str2));
+        /////№4
+        while (c.hasNextInt()) {
+            int a1 = c.nextInt();
+            chisl.add(a1);
+        }
+        System.out.println(warOfNumbers(chisl));
+        /////№5
+        String str = console.nextLine();
+        System.out.println(reverseCase(str));
+        /////№6
+        String st = console.nextLine();
+        System.out.println(inatorInator(st));
+        /////№7
+        int a2 = c0.nextInt();
+        int b = c0.nextInt();
+        int cc = c0.nextInt();
+        int w = c0.nextInt();
+        int h = c0.nextInt();
+        System.out.println(doesBrickFit(a2,b,cc,w,h));
+        /////№8
+        double lit = c0.nextDouble();
+        double ras = c0.nextDouble();
+        int pas = c0.nextInt();
+        boolean cond = c0.nextBoolean();
+        System.out.println(totalDistance(lit,ras,pas,cond));
+        /////№9
+        while (c0.hasNextInt()) {
+            int num = c0.nextInt();
+                ch.add(num);
+            }
+        System.out.println(mean(ch));
+        /////№10
+        int chiss = c00.nextInt();
+        System.out.println(parityAnalysis(chiss));
+    }
+    public static void millionsRounding(List<city> cit) { // округление
+        cit.forEach(p -> {
+            p.setCount((int) Math.round((double) p.getCount() / 1000000) * 1000000);
+            System.out.println(p.getValues());
+        });
+    }
+    public static List<city> namee(List<city> list, String ss){ // заполнение
+        String[] news = ss.split(" ");
+        if (Arrays.stream(news).count()==3) {
+        news[0]=news[0]+ ' ' + news[1];
+        news[1]=news[2];
+        }
+        int coun =  Integer.parseInt(news[1]);
+        list.add(new city(news[0],coun));
+        return list;
+    }
+    public static List<Double> otherSides(int a) { // вычисление двух сторон по одной
+        List<Double> stor = new ArrayList<>();
+        double b = a * 2;
+        double squareC = b * b - a * a;
+        double c = Math.sqrt(squareC);
+        double scale = Math.pow(10, 2);
+        double result = Math.ceil(c * scale)/scale;
+        stor.add(b);
+        stor.add(result);
+        return stor;
+    }
+    public static String rps(String a, String b) { // камень/ножницы/бумага
+        if (a.equals(b))
+            return "TIE";
+        else {
+            if (a.equals("rock")) {
+                if (b.equals("paper")) {
+                    return "Player 2 wins";
+                } else {
+                    return "Player 1 wins";
+                }
+            }
+            else if (a.equals("paper")) {
+                if (b.equals("scissors")) {
+                    return "Player 2 wins";
+                } else {
+                    return "Player 1 wins";
+                }
+            }
+            else if (a.equals("scissors")) {
+                if (b.equals("rock")) {
+                    return "Player 2 wins";
+                } else {
+                    return "Player 1 wins";
+                }
+            }
+        }
+        return null;
+    }
+    public static int warOfNumbers(List<Integer> chisla) { // разница четных и нечатных
+        final int[] chetn = {0};
+        final int[] nechetn = {0};
+        chisla.stream().forEach(number -> {
+            if (number % 2 == 0)
+                chetn[0] += number;
+            else nechetn[0] += number;
+        });
+        return Math.abs(chetn[0] - nechetn[0]);
+    }
+    public static String reverseCase(String sent) { // смена регистра
+        char[] arr = sent.toCharArray();
+        for (int i = 0; i < arr.length; i++) {
+            char c = arr[i];
+            if (Character.isUpperCase(c)) {
+                arr[i] = Character.toLowerCase(c);
+            } else if (Character.isLowerCase(c)) {
+                arr[i] = Character.toUpperCase(c);
+            }
+        }
+        return new String(arr);
+    }
+    public static String inatorInator(String stroka) { // добавление строки
+        if (stroka.matches(".*[aeiou]$")) {
+            return stroka + "-inator " + stroka.length() + "000";
+        } else
+            return stroka + "inator " + stroka.length() + "000";
+    }
+    public static boolean doesBrickFit(int a, int b, int c, int w, int h) { // влезание кирпича
+        return a * b <= w * h || a * c <= w * h || b * c <= w * h;
+    }
+    public static double totalDistance(double litres, double price, int passes, boolean cond) { // рассчет км
+        double multiple = 1;
+        if (cond) multiple *= 1.1;
+        double passesMult = 1;
+        for (int i = 0; i < passes; i++) {
+            passesMult += 0.05;
+        }
+        return Math.ceil(((litres / (price * multiple * passesMult)) * 100)*100)/100;
+    }
+    public static double mean(List<Integer> ch) { // среднее значение
+        double sum = ch.stream().mapToInt(Integer::intValue).sum();
+        return Math.ceil((sum / ch.size())*100)/100;
+    }
+    public static boolean parityAnalysis(int number) { // сумма всех цифр числа
+        int sum = 0;
+        int number_c = number;
+        while (number_c != 0) {
+            sum += number_c % 10;
+            number_c /= 10;
+        }
+        return sum % 2 == number % 2;
+    }
+}
+
